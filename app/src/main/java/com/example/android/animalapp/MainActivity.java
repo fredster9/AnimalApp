@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -34,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
 
     };
 
+public class UserListActivity extends AppCompatActivity {
+
+    ArrayList<Contact> contacts;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,8 +48,20 @@ public class MainActivity extends AppCompatActivity {
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+    // Lookup the recycler view in the activity layout
+        RecyclerView rvContacts = (RecyclerView) findViewById(R.id.rvContacts);
+
+        // Initialize contacts
+        contacts = Contact.createContactsList(20);
+        // Create adapter passing in the sample user data
+        ContactsAdapter adapter = new ContactsAdapter(this, contacts);
+        // Attach the adapter to the recyclerview to populate
+        rvContacts.setAdapter(adapter);
+        // Set the layout manager to position the items
+        rvContacts.setLayoutManager(new LinearLayoutManager(this));
+
     }
 
-
+    }
 }
-
